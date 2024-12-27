@@ -10,10 +10,10 @@ import (
 
 type ProjectRepositoryInterface interface {
 	Connection() *gorm.DB
-	Create(project models.Project) models.Project
-	List(userId string) []models.Project
-	Update(id string, project models.Project) models.Project
-	Delete(id string)
+	Create(project models.Project) (models.Project, error)
+	List(userId string) ([]models.Project, error)
+	Update(id string, project models.Project) (models.Project, error)
+	Delete(id string) error
 }
 
 type ProjectRepository struct {
@@ -30,16 +30,21 @@ func (repo *ProjectRepository) Connection() *gorm.DB {
 	return repo.DB
 }
 
-func (repo *ProjectRepository) Create(Project models.Project) models.Project {
-	var newProject models.Project
-	repo.DB.Create(&Project).Scan(&newProject)
-	return newProject
+func (repo *ProjectRepository) Create(project models.Project) (models.Project, error) {
+	result := repo.DB.Create(&project)
+	if result.Error != nil {
+		return models.Project{}, result.Error
+	}
+	return project, nil
 }
 
-func (repo *ProjectRepository) List(userId string) []models.Project {
+func (repo *ProjectRepository) List(userId string) ([]models.Project, error) {
 	var projects []models.Project
-	repo.DB.Table("projects").Find(&projects, "user_id = ?", userId)
-	return projects
+	result := repo.DB.Where("user_id = ?", userId).Find(&projects)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return projects, nil
 }
 
 func (repo *ProjectRepository) Update(id string, updatedProject models.Project) (models.Project, error) {
@@ -48,7 +53,10 @@ func (repo *ProjectRepository) Update(id string, updatedProject models.Project) 
 	if result.Error != nil {
 		return existingProject, result.Error
 	}
-	repo.DB.Model(&existingProject).Updates(updatedProject)
+
+	if err := repo.DB.Model(&existingProject).Updates(updatedProject).Error; err != nil {
+		return existingProject, err
+	}
 	return existingProject, nil
 }
 

@@ -10,10 +10,10 @@ import (
 
 type DocumentRepositoryInterface interface {
 	Connection() *gorm.DB
-	Create(document models.Document) models.Document
-	List(userId string) []models.Document
-	Update(id string, document models.Document) models.Document
-	Delete(id string)
+	Create(document models.Document) (models.Document, error)
+	List(userId string) ([]models.Document, error)
+	Update(id string, document models.Document) (models.Document, error)
+	Delete(id string) error
 }
 
 type DocumentRepository struct {
@@ -30,16 +30,21 @@ func (repo *DocumentRepository) Connection() *gorm.DB {
 	return repo.DB
 }
 
-func (repo *DocumentRepository) Create(Document models.Document) models.Document {
-	var newDocument models.Document
-	repo.DB.Create(&Document).Scan(&newDocument)
-	return newDocument
+func (repo *DocumentRepository) Create(document models.Document) (models.Document, error) {
+	result := repo.DB.Create(&document)
+	if result.Error != nil {
+		return models.Document{}, result.Error
+	}
+	return document, nil
 }
 
-func (repo *DocumentRepository) List(userId string) []models.Document {
+func (repo *DocumentRepository) List(userId string) ([]models.Document, error) {
 	var documents []models.Document
-	repo.DB.Table("documents").Find(&documents, "user_id = ?", userId)
-	return documents
+	result := repo.DB.Where("user_id = ?", userId).Find(&documents)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return documents, nil
 }
 
 func (repo *DocumentRepository) Update(id string, updatedDocument models.Document) (models.Document, error) {
@@ -48,7 +53,10 @@ func (repo *DocumentRepository) Update(id string, updatedDocument models.Documen
 	if result.Error != nil {
 		return existingDocument, result.Error
 	}
-	repo.DB.Model(&existingDocument).Updates(updatedDocument)
+
+	if err := repo.DB.Model(&existingDocument).Updates(updatedDocument).Error; err != nil {
+		return existingDocument, err
+	}
 	return existingDocument, nil
 }
 

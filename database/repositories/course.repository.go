@@ -10,10 +10,10 @@ import (
 
 type CourseRepositoryInterface interface {
 	Connection() *gorm.DB
-	Create(course models.Course) models.Course
-	List(userId string) []models.Course
-	Update(id string, corse models.Course) models.Course
-	Delete(id string)
+	Create(course models.Course) (models.Course, error)
+	List(userId string) ([]models.Course, error)
+	Update(id string, course models.Course) (models.Course, error)
+	Delete(id string) error
 }
 
 type CourseRepository struct {
@@ -30,17 +30,21 @@ func (repo *CourseRepository) Connection() *gorm.DB {
 	return repo.DB
 }
 
-func (repo *CourseRepository) Create(Course models.Course) models.Course {
-	var newCourse models.Course
-	repo.DB.Create(&Course).Scan(&newCourse)
-	return newCourse
+func (repo *CourseRepository) Create(course models.Course) (models.Course, error) {
+	result := repo.DB.Create(&course)
+	if result.Error != nil {
+		return models.Course{}, result.Error
+	}
+	return course, nil
 }
 
-func (repo *CourseRepository) List(userId string) []models.Course {
+func (repo *CourseRepository) List(userId string) ([]models.Course, error) {
 	var courses []models.Course
-	repo.DB.Table("courses").Find(&courses, "userId = ?", userId)
-	return courses
-
+	result := repo.DB.Table("courses").Where("user_id = ?", userId).Find(&courses)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return courses, nil
 }
 
 func (repo *CourseRepository) Update(id string, updatedCourse models.Course) (models.Course, error) {

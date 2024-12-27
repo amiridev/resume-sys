@@ -9,9 +9,9 @@ import (
 
 type ProfileRepositoryInterface interface {
 	Connection() *gorm.DB
-	Create(profile models.Profile) models.Profile
-	List(userId string) []models.Profile
-	Update(id string, profile models.Profile) models.Profile
+	Create(profile models.Profile) (models.Profile, error)
+	List(userId string) ([]models.Profile, error)
+	Update(id string, profile models.Profile) (models.Profile, error)
 }
 
 type ProfileRepository struct {
@@ -28,16 +28,21 @@ func (repo *ProfileRepository) Connection() *gorm.DB {
 	return repo.DB
 }
 
-func (repo *ProfileRepository) Create(Profile models.Profile) models.Profile {
-	var newProfile models.Profile
-	repo.DB.Create(&Profile).Scan(&newProfile)
-	return newProfile
+func (repo *ProfileRepository) Create(profile models.Profile) (models.Profile, error) {
+	result := repo.DB.Create(&profile)
+	if result.Error != nil {
+		return models.Profile{}, result.Error
+	}
+	return profile, nil
 }
 
-func (repo *ProfileRepository) List(userId string) []models.Profile {
+func (repo *ProfileRepository) List(userId string) ([]models.Profile, error) {
 	var profiles []models.Profile
-	repo.DB.Table("profiles").Find(&profiles, "user_id = ?", userId)
-	return profiles
+	result := repo.DB.Where("user_id = ?", userId).Find(&profiles)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return profiles, nil
 }
 
 func (repo *ProfileRepository) Update(id string, updatedProfile models.Profile) (models.Profile, error) {
@@ -46,6 +51,9 @@ func (repo *ProfileRepository) Update(id string, updatedProfile models.Profile) 
 	if result.Error != nil {
 		return existingProfile, result.Error
 	}
-	repo.DB.Model(&existingProfile).Updates(updatedProfile)
+
+	if err := repo.DB.Model(&existingProfile).Updates(updatedProfile).Error; err != nil {
+		return existingProfile, err
+	}
 	return existingProfile, nil
 }

@@ -10,10 +10,10 @@ import (
 
 type ExperienceRepositoryInterface interface {
 	Connection() *gorm.DB
-	Create(experience models.Experience) models.Experience
-	List(userId string) []models.Experience
-	Update(id string, experience models.Experience) models.Experience
-	Delete(id string)
+	Create(experience models.Experience) (models.Experience, error)
+	List(userId string) ([]models.Experience, error)
+	Update(id string, experience models.Experience) (models.Experience, error)
+	Delete(id string) error
 }
 
 type ExperienceRepository struct {
@@ -30,16 +30,21 @@ func (repo *ExperienceRepository) Connection() *gorm.DB {
 	return repo.DB
 }
 
-func (repo *ExperienceRepository) Create(Experience models.Experience) models.Experience {
-	var newExperience models.Experience
-	repo.DB.Create(&Experience).Scan(&newExperience)
-	return newExperience
+func (repo *ExperienceRepository) Create(experience models.Experience) (models.Experience, error) {
+	result := repo.DB.Create(&experience)
+	if result.Error != nil {
+		return models.Experience{}, result.Error
+	}
+	return experience, nil
 }
 
-func (repo *ExperienceRepository) List(userId string) []models.Experience {
+func (repo *ExperienceRepository) List(userId string) ([]models.Experience, error) {
 	var experiences []models.Experience
-	repo.DB.Table("eperiences").Find(&experiences, "user_id = ?", userId)
-	return experiences
+	result := repo.DB.Where("user_id = ?", userId).Find(&experiences)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return experiences, nil
 }
 
 func (repo *ExperienceRepository) Update(id string, updatedExperience models.Experience) (models.Experience, error) {
@@ -48,14 +53,17 @@ func (repo *ExperienceRepository) Update(id string, updatedExperience models.Exp
 	if result.Error != nil {
 		return existingExperience, result.Error
 	}
-	repo.DB.Model(&existingExperience).Updates(updatedExperience)
+
+	if err := repo.DB.Model(&existingExperience).Updates(updatedExperience).Error; err != nil {
+		return existingExperience, err
+	}
 	return existingExperience, nil
 }
 
 func (repo *ExperienceRepository) Delete(id string) error {
 	result := repo.DB.Delete(&models.Experience{}, "id = ?", id)
 	if result.RowsAffected == 0 {
-		return fmt.Errorf("record not found") // اگر رکوردی پیدا نشود
+		return fmt.Errorf("record not found") // رکورد پیدا نشد
 	}
 	return nil
 }
