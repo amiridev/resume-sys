@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"fmt"
 	"resume-sys/database"
 	"resume-sys/database/models"
 
@@ -39,4 +40,22 @@ func (repo *SkillRepository) List(userId string) []models.Skill {
 	var skills []models.Skill
 	repo.DB.Table("skills").Find(&skills, "user_id = ?", userId)
 	return skills
+}
+
+func (repo *SkillRepository) Update(id string, updatedSkill models.Skill) (models.Skill, error) {
+	var existingSkill models.Skill
+	result := repo.DB.First(&existingSkill, "id = ?", id)
+	if result.Error != nil {
+		return existingSkill, result.Error // خطا اگر رکورد پیدا نشود
+	}
+	repo.DB.Model(&existingSkill).Updates(updatedSkill)
+	return existingSkill, nil
+}
+
+func (repo *SkillRepository) Delete(id string) error {
+	result := repo.DB.Delete(&models.Skill{}, "id = ?", id)
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("record not found") // اگر رکوردی پیدا نشود
+	}
+	return nil
 }

@@ -18,6 +18,12 @@ func Migrate() {
 		&models.User{},
 		&models.Token{},
 		&models.Skill{},
+		&models.Course{},
+		&models.Document{},
+		&models.Education{},
+		&models.Experience{},
+		&models.Profile{},
+		&models.Project{},
 	)
 
 	if err != nil {

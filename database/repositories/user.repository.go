@@ -20,7 +20,7 @@ type UserRepository struct {
 }
 
 func NewUserRepository() *UserRepository {
-	return &UserRepository{
+	return &UserRepository{ //dependenci ingection
 		DB: database.Connection(),
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Documents struct {
+type Document struct {
 	ID              string    `gorm:"type:varchar(40);primaryKey"`
 	UserID          string    `gorm:"type:varchar(40);not null"`
 	Title           string    `gorm:"type:varchar(255);not null" `
@@ -22,7 +22,7 @@ type Documents struct {
 	User User `gorm:"foreignKey:UserID"`
 }
 
-func (d *Documents) BeforeCreate(tx *gorm.DB) (err error) {
+func (d *Document) BeforeCreate(tx *gorm.DB) (err error) {
 	d.ID = helpers.CUID()
 
 	return
