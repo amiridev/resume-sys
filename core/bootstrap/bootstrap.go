@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"resume-sys/core"
 	"resume-sys/core/config"
 	"resume-sys/core/engine"
 	"resume-sys/database"
@@ -19,7 +20,7 @@ func Handle() {
 	// register routes
 	engine.RegisterRoutes()
 
-	// init swagger
+	core.Initialize()
 
 	engine.Serve()
 }

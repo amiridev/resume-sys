@@ -19,6 +19,8 @@ func HomeRoute(c *gin.Context) {
 }
 
 func RegisterRoutes(router *gin.RouterGroup) {
+	core.Initialize()
+
 	router.GET("", HomeRoute)
 
 	v1Group := router.Group("/v1")
