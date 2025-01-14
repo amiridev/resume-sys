@@ -12,6 +12,7 @@ type CourseRepositoryInterface interface {
 	Connection() *gorm.DB
 	Create(course models.Course) (models.Course, error)
 	List(userId string) ([]models.Course, error)
+	Show(courseId string) (models.Course, error)
 	Update(id string, course models.Course) (models.Course, error)
 	Delete(id string) error
 }
@@ -45,6 +46,18 @@ func (repo *CourseRepository) List(userId string) ([]models.Course, error) {
 		return nil, result.Error
 	}
 	return courses, nil
+}
+
+func (repo *CourseRepository) Show(courseId string) (models.Course, error) {
+	var course models.Course
+
+	result := repo.DB.First(&course, "id = ?", courseId)
+
+	if result.Error != nil {
+		return course, result.Error
+	}
+
+	return course, nil
 }
 
 func (repo *CourseRepository) Update(id string, updatedCourse models.Course) (models.Course, error) {
