@@ -54,7 +54,7 @@ func (service *CoursesService) Create(userId string, dto CourseCreateDto) (model
 	})
 
 	if err != nil {
-		return course, core.Error{"reason": "Something wrong!"}
+		return course, core.Error{"reason": "Something wrong! "}
 
 	}
 
