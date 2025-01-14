@@ -33,7 +33,7 @@ func (service *AuthService) Login(dto LoginDto) (Tokens, core.Error) {
 	user := service.userRepository.FindByMobile(dto.Mobile)
 
 	if user.ID == "" || !user.CheckPasswordHash(dto.Password) {
-		return tokens, core.Error{"email": "Invalid input data"}
+		return tokens, core.Error{"mobile": "Invalid input data"}
 	}
 
 	var waitGroup sync.WaitGroup

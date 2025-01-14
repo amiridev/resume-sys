@@ -84,6 +84,24 @@ definitions:
       message:
         type: string
     type: object
+  core.Response-projects_ProjectResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/projects.ProjectResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+  core.Response-projects_ProjectsResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/projects.ProjectsResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
   core.Response-users_UserResponseType:
     properties:
       data:
@@ -110,6 +128,81 @@ definitions:
         type: object
       message:
         type: string
+    type: object
+  projects.Project:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      image_url:
+        type: string
+      link:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  projects.ProjectCreateDto:
+    properties:
+      description:
+        type: string
+      image_url:
+        maxLength: 250
+        minLength: 10
+        type: string
+      link:
+        type: string
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - description
+    - image_url
+    - link
+    - status
+    - title
+    type: object
+  projects.ProjectResponseType:
+    properties:
+      project:
+        $ref: '#/definitions/projects.Project'
+    type: object
+  projects.ProjectUpdateDto:
+    properties:
+      description:
+        type: string
+      image_url:
+        maxLength: 250
+        minLength: 10
+        type: string
+      link:
+        type: string
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - description
+    - image_url
+    - link
+    - status
+    - title
+    type: object
+  projects.ProjectsResponseType:
+    properties:
+      projects:
+        items:
+          $ref: '#/definitions/projects.Project'
+        type: array
     type: object
   users.User:
     properties:
@@ -265,6 +358,114 @@ paths:
       summary: fetch logged in user info
       tags:
       - Auth
+  /api/v1/projects:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-projects_ProjectsResponseType'
+      security:
+      - Bearer: []
+      summary: get list of projects
+      tags:
+      - Projects
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: project inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.ProjectCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-projects_ProjectResponseType'
+      security:
+      - Bearer: []
+      summary: create new project api
+      tags:
+      - Projects
+  /api/v1/projects/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Project ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: get project by id
+      tags:
+      - Projects
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Project ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-projects_ProjectResponseType'
+      security:
+      - Bearer: []
+      summary: get project by id
+      tags:
+      - Projects
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Project ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: project inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/projects.ProjectUpdateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: update project by id
+      tags:
+      - Projects
   /api/v1/users:
     get:
       consumes:

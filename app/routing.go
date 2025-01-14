@@ -2,6 +2,7 @@ package app
 
 import (
 	"resume-sys/app/auth"
+	"resume-sys/app/projects"
 	"resume-sys/app/users"
 	"resume-sys/core"
 
@@ -27,5 +28,6 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	{
 		auth.RegisterRoutes(v1Group)
 		users.RegisterRoutes(v1Group)
+		projects.RegisterRoutes(v1Group)
 	}
 }

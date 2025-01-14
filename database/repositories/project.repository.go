@@ -12,6 +12,7 @@ type ProjectRepositoryInterface interface {
 	Connection() *gorm.DB
 	Create(project models.Project) (models.Project, error)
 	List(userId string) ([]models.Project, error)
+	Show(projectId string) (models.Project, error)
 	Update(id string, project models.Project) (models.Project, error)
 	Delete(id string) error
 }
@@ -45,6 +46,18 @@ func (repo *ProjectRepository) List(userId string) ([]models.Project, error) {
 		return nil, result.Error
 	}
 	return projects, nil
+}
+
+func (repo *ProjectRepository) Show(projectId string) (models.Project, error) {
+	var project models.Project
+
+	result := repo.DB.First(&project, "id = ?", projectId)
+
+	if result.Error != nil {
+		return project, result.Error
+	}
+
+	return project, nil
 }
 
 func (repo *ProjectRepository) Update(id string, updatedProject models.Project) (models.Project, error) {
