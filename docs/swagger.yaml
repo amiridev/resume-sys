@@ -84,6 +84,24 @@ definitions:
       message:
         type: string
     type: object
+  core.Response-courses_CourseResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/courses.CourseResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+  core.Response-courses_CoursesResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/courses.CoursesResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
   core.Response-projects_ProjectResponseType:
     properties:
       data:
@@ -128,6 +146,69 @@ definitions:
         type: object
       message:
         type: string
+    type: object
+  courses.Course:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  courses.CourseCreateDto:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - category
+    - description
+    - status
+    - title
+    type: object
+  courses.CourseResponseType:
+    properties:
+      course:
+        $ref: '#/definitions/courses.Course'
+    type: object
+  courses.CourseUpdateDto:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - category
+    - description
+    - status
+    - title
+    type: object
+  courses.CoursesResponseType:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/courses.Course'
+        type: array
     type: object
   projects.Project:
     properties:
@@ -358,6 +439,114 @@ paths:
       summary: fetch logged in user info
       tags:
       - Auth
+  /api/v1/courses:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-courses_CoursesResponseType'
+      security:
+      - Bearer: []
+      summary: get list of courses
+      tags:
+      - Courses
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Courses inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/courses.CourseCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-courses_CourseResponseType'
+      security:
+      - Bearer: []
+      summary: create new course api
+      tags:
+      - Courses
+  /api/v1/courses/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Course ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: get Course by id
+      tags:
+      - Courses
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Course ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-courses_CourseResponseType'
+      security:
+      - Bearer: []
+      summary: get course by id
+      tags:
+      - Courses
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Course ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: course inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/courses.CourseUpdateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: update course by id
+      tags:
+      - Courses
   /api/v1/projects:
     get:
       consumes:
