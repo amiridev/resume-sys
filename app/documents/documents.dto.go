@@ -8,7 +8,7 @@ type DocumentCreateDto struct {
 	Ratings         int       `json:"ratings" binding:"gte=0,lte=5"`
 	Description     string    `json:"description" binding:"required"`
 	Status          string    `json:"status" binding:"required"`
-	PublicationDate time.Time `json:"publicationDate" binding:"required,datetime=2006-01-02"`
+	PublicationDate time.Time `json:"publication_date" binding:"required,datetime=2006-01-02"`
 }
 
 type DocumentUpdateDto struct {
@@ -17,5 +17,5 @@ type DocumentUpdateDto struct {
 	Ratings         int       `json:"ratings" binding:"gte=0,lte=5"`
 	Description     string    `json:"description" binding:"required"`
 	Status          string    `json:"status" binding:"required"`
-	PublicationDate time.Time `json:"publicationDate" binding:"required,datetime=2006-01-02"`
+	PublicationDate time.Time `json:"publication_date" binding:"required,datetime=2006-01-02"`
 }

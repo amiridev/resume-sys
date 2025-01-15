@@ -15,7 +15,7 @@ type Document struct {
 	Ratings         int       `json:"ratings"`
 	Description     string    `json:"description"`
 	Status          string    `json:"status"`
-	PublicationDate time.Time `json:"publicationDate"`
+	PublicationDate time.Time `json:"publication_date"`
 }
 
 // one document response
