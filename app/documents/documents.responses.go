@@ -11,11 +11,11 @@ type Document struct {
 	ID              string    `json:"id"`
 	UserID          string    `json:"user_id"`
 	Title           string    `json:"title"`
-	Category        string    `json:"Category"`
-	Ratings         int       `json:"Ratings"`
-	Description     string    `json:"Description"`
+	Category        string    `json:"category"`
+	Ratings         int       `json:"ratings"`
+	Description     string    `json:"description"`
 	Status          string    `json:"status"`
-	PublicationDate time.Time `json:"PublicationDate"`
+	PublicationDate time.Time `json:"publicationDate"`
 }
 
 // one document response

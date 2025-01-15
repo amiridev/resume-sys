@@ -102,6 +102,24 @@ definitions:
       message:
         type: string
     type: object
+  core.Response-documents_DocumentResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/documents.DocumentResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+  core.Response-documents_DocumentsResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/documents.DocumentsResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
   core.Response-projects_ProjectResponseType:
     properties:
       data:
@@ -208,6 +226,87 @@ definitions:
       courses:
         items:
           $ref: '#/definitions/courses.Course'
+        type: array
+    type: object
+  documents.Document:
+    properties:
+      Category:
+        type: string
+      Description:
+        type: string
+      PublicationDate:
+        type: string
+      Ratings:
+        type: integer
+      id:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  documents.DocumentCreateDto:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      publicationDate:
+        type: string
+      ratings:
+        maximum: 5
+        minimum: 0
+        type: integer
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - category
+    - description
+    - publicationDate
+    - status
+    - title
+    type: object
+  documents.DocumentResponseType:
+    properties:
+      Document:
+        $ref: '#/definitions/documents.Document'
+    type: object
+  documents.DocumentUpdateDto:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      publicationDate:
+        type: string
+      ratings:
+        maximum: 5
+        minimum: 0
+        type: integer
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - category
+    - description
+    - publicationDate
+    - status
+    - title
+    type: object
+  documents.DocumentsResponseType:
+    properties:
+      documents:
+        items:
+          $ref: '#/definitions/documents.Document'
         type: array
     type: object
   projects.Project:
@@ -321,6 +420,93 @@ paths:
       summary: app route, get heathy status
       tags:
       - App
+  /api/v1/Documents:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-documents_DocumentsResponseType'
+      security:
+      - Bearer: []
+      summary: get list of documents
+      tags:
+      - Documents
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: document inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/documents.DocumentCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-documents_DocumentResponseType'
+      security:
+      - Bearer: []
+      summary: create new document api
+      tags:
+      - Documents
+  /api/v1/Documents/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Document ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: get document by id
+      tags:
+      - Documents
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Document ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: document inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/documents.DocumentUpdateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: update document by id
+      tags:
+      - Documents
   /api/v1/auth/login:
     post:
       consumes:
@@ -547,6 +733,28 @@ paths:
       summary: update course by id
       tags:
       - Courses
+  /api/v1/documents/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Document ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-documents_DocumentResponseType'
+      security:
+      - Bearer: []
+      summary: get document by id
+      tags:
+      - Documents
   /api/v1/projects:
     get:
       consumes:
