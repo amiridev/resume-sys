@@ -27,7 +27,7 @@ func SkillTransform(skill models.Skill) Skill {
 }
 
 type SkillResponseType struct {
-	Project Skill `json:"skill"`
+	Skill Skill `json:"skill"`
 }
 
 func SkillResponse(skill models.Skill) ResponseType {
@@ -54,6 +54,6 @@ type SkillsResponseType struct {
 
 func SkillsResponse(skills []models.Skill) ResponseType {
 	return ResponseType{
-		"projects": SkillsTransform(skills),
+		"skills": SkillsTransform(skills),
 	}
 }

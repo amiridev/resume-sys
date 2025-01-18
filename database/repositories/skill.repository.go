@@ -13,8 +13,8 @@ type SkillRepositoryInterface interface {
 	Create(skill models.Skill) models.Skill
 	List(userId string) []models.Skill
 	Show(skillId string) (models.Skill, error)
-	Update(id string, skill models.Skill) models.Skill
-	Delete(id string)
+	Update(id string, skill models.Skill) (models.Skill, error)
+	Delete(id string) error
 }
 
 type SkillRepository struct {
@@ -31,9 +31,9 @@ func (repo *SkillRepository) Connection() *gorm.DB {
 	return repo.DB
 }
 
-func (repo *SkillRepository) Create(Skill models.Skill) models.Skill {
+func (repo *SkillRepository) Create(skill models.Skill) models.Skill {
 	var newSkill models.Skill
-	repo.DB.Create(&Skill).Scan(&newSkill)
+	repo.DB.Create(&skill).Scan(&newSkill)
 	return newSkill
 }
 

@@ -7,9 +7,9 @@ import (
 )
 
 type SkillsServiceInterface interface {
-	List(userId string) ([]models.Skill, core.Error)
+	List(userId string) []models.Skill
 	Show(skillId string) (models.Skill, core.Error)
-	Create(userId string, dto SkillCreateDto) (models.Skill, core.Error)
+	Create(userId string, dto SkillCreateDto) models.Skill
 	Update(skillId string, dto SkillUpdateDto) core.Error
 	Delete(skillId string) core.Error
 }
@@ -24,14 +24,10 @@ func NewSkillsService() *SkillsService {
 	}
 }
 
-func (service *SkillsService) List(userId string) ([]models.Skill, core.Error) {
-	skills, err := service.repository.List(userId)
+func (service *SkillsService) List(userId string) []models.Skill {
+	skills := service.repository.List(userId)
 
-	if err != nil {
-		return skills, core.Error{"reason": "Something wrong!"}
-	}
-
-	return skills, nil
+	return skills
 }
 
 func (service *SkillsService) Show(skillId string) (models.Skill, core.Error) {
@@ -44,9 +40,9 @@ func (service *SkillsService) Show(skillId string) (models.Skill, core.Error) {
 	return skill, nil
 }
 
-func (service *SkillsService) Create(userId string, dto SkillCreateDto) (models.Skill, core.Error) {
+func (service *SkillsService) Create(userId string, dto SkillCreateDto) models.Skill {
 
-	skill, err := service.repository.Create(models.Skill{
+	skill := service.repository.Create(models.Skill{
 		UserID:      userId,
 		Title:       dto.Title,
 		Level:       dto.Level,
@@ -54,11 +50,7 @@ func (service *SkillsService) Create(userId string, dto SkillCreateDto) (models.
 		Description: dto.Description,
 	})
 
-	if err != nil {
-		return skill, core.Error{"reason": "Something wrong!"}
-	}
-
-	return skill, nil
+	return skill
 }
 
 func (service *SkillsService) Update(skillId string, dto SkillUpdateDto) core.Error {
@@ -70,7 +62,7 @@ func (service *SkillsService) Update(skillId string, dto SkillUpdateDto) core.Er
 	})
 
 	if err != nil {
-		return skill, core.Error{"reason": "Something wrong!"}
+		return core.Error{"reason": "Something wrong!"}
 
 	}
 
