@@ -12,6 +12,7 @@ type EducationRepositoryInterface interface {
 	Connection() *gorm.DB
 	Create(education models.Education) models.Education
 	List(userId string) []models.Education
+	Show(educationId string) (models.Education, error)
 	Update(id string, education models.Education) models.Education
 	Delete(id string)
 }
@@ -48,6 +49,18 @@ func (repo *EducationRepository) List(userId string) []models.Education {
 
 	return educations
 
+}
+
+func (repo *EducationRepository) Show(educationId string) (models.Education, error) {
+	var education models.Education
+
+	result := repo.DB.First(&education, "id = ?", educationId)
+
+	if result.Error != nil {
+		return education, result.Error
+	}
+
+	return education, nil
 }
 
 func (repo *EducationRepository) Update(id string, updatedEducation models.Education) (models.Education, error) {
