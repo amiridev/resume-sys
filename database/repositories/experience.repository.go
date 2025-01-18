@@ -43,12 +43,12 @@ func (repo *ExperienceRepository) List(userId string) ([]models.Experience, erro
 	var experiences []models.Experience
 	result := repo.DB.Where("user_id = ?", userId).Find(&experiences)
 	if result.Error != nil {
-		return nil, result.Error
+		return experiences, result.Error
 	}
 	return experiences, nil
 }
 
-func (repo *EducationRepository) Show(experienceId string) (models.Experience, error) {
+func (repo *ExperienceRepository) Show(experienceId string) (models.Experience, error) {
 	var experience models.Experience
 
 	result := repo.DB.First(&experience, "id = ?", experienceId)

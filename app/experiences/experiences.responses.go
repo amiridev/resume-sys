@@ -1,6 +1,9 @@
 package experiences
 
-import "resume-sys/database/models"
+import (
+	"resume-sys/database/models"
+	"time"
+)
 
 type ResponseType map[string]any
 
@@ -23,8 +26,8 @@ func ExperienceTransform(experience models.Experience) Experience {
 		Title:     experience.Title,
 		Company:   experience.Company,
 		Status:    experience.Status,
-		StartedAt: experience.StartedAt,
-		EndedAt:   experience.EndedAt,
+		StartedAt: experience.StartedAt.Format(time.RFC3339),
+		EndedAt:   experience.EndedAt.Format(time.RFC3339),
 	}
 }
 
