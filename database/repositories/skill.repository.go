@@ -12,6 +12,7 @@ type SkillRepositoryInterface interface {
 	Connection() *gorm.DB
 	Create(skill models.Skill) models.Skill
 	List(userId string) []models.Skill
+	Show(skillId string) (models.Skill, error)
 	Update(id string, skill models.Skill) models.Skill
 	Delete(id string)
 }
@@ -40,6 +41,18 @@ func (repo *SkillRepository) List(userId string) []models.Skill {
 	var skills []models.Skill
 	repo.DB.Table("skills").Find(&skills, "user_id = ?", userId)
 	return skills
+}
+
+func (repo *SkillRepository) Show(skillId string) (models.Skill, error) {
+	var skill models.Skill
+
+	result := repo.DB.First(&skill, "id = ?", skillId)
+
+	if result.Error != nil {
+		return skill, result.Error
+	}
+
+	return skill, nil
 }
 
 func (repo *SkillRepository) Update(id string, updatedSkill models.Skill) (models.Skill, error) {
