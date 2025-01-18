@@ -5,6 +5,7 @@ import (
 	"resume-sys/app/courses"
 	"resume-sys/app/documents"
 	"resume-sys/app/projects"
+	"resume-sys/app/skills"
 	"resume-sys/app/users"
 	"resume-sys/core"
 
@@ -33,5 +34,6 @@ func RegisterRoutes(router *gin.RouterGroup) {
 		projects.RegisterRoutes(v1Group)
 		courses.RegisterRoutes(v1Group)
 		documents.RegisterRoutes(v1Group)
+		skills.RegisterRoutes(v1Group)
 	}
 }
