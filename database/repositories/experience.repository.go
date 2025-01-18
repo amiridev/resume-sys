@@ -12,6 +12,7 @@ type ExperienceRepositoryInterface interface {
 	Connection() *gorm.DB
 	Create(experience models.Experience) (models.Experience, error)
 	List(userId string) ([]models.Experience, error)
+	Show(experienceId string) (models.Experience, error)
 	Update(id string, experience models.Experience) (models.Experience, error)
 	Delete(id string) error
 }
@@ -45,6 +46,18 @@ func (repo *ExperienceRepository) List(userId string) ([]models.Experience, erro
 		return nil, result.Error
 	}
 	return experiences, nil
+}
+
+func (repo *EducationRepository) Show(experienceId string) (models.Experience, error) {
+	var experience models.Experience
+
+	result := repo.DB.First(&experience, "id = ?", experienceId)
+
+	if result.Error != nil {
+		return experience, result.Error
+	}
+
+	return experience, nil
 }
 
 func (repo *ExperienceRepository) Update(id string, updatedExperience models.Experience) (models.Experience, error) {
