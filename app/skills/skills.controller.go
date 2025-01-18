@@ -30,7 +30,7 @@ func (ctrl *SkillsController) List(c *gin.Context) {
 	user := core.User(c)
 
 	// get list data from service & repository
-	skills, _ := ctrl.service.List(user.ID)
+	skills := ctrl.service.List(user.ID)
 
 	// response projects data as clean transform data
 	ctrl.root.Success(c, SkillsResponse(skills))
@@ -75,7 +75,7 @@ func (ctrl *SkillsController) Create(c *gin.Context) {
 
 	user := core.User(c)
 
-	skill, _ := ctrl.service.Create(user.ID, dto)
+	skill := ctrl.service.Create(user.ID, dto)
 
 	ctrl.root.Success(c, SkillResponse(skill))
 }
