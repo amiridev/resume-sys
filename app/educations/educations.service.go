@@ -7,7 +7,7 @@ import (
 )
 
 type EducationsServiceInterface interface {
-	List(userId string) ([]models.Education, core.Error)
+	List(userId string) []models.Education
 	Show(educationId string) (models.Education, core.Error)
 	Create(userId string, dto EducationCreateDto) (models.Education, core.Error)
 	Update(educationId string, dto EducationUpdateDto) core.Error
@@ -24,14 +24,9 @@ func NewEducationsService() *EducationsService {
 	}
 }
 
-func (service *EducationsService) List(userId string) ([]models.Education, core.Error) {
-	educations, err := service.repository.List(userId)
-
-	if err != nil {
-		return educations, core.Error{"reason": "Something wrong!"}
-	}
-
-	return educations, nil
+func (service *EducationsService) List(userId string) []models.Education {
+	educations := service.repository.List(userId)
+	return educations
 }
 
 func (service *EducationsService) Show(educationId string) (models.Education, core.Error) {

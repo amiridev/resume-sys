@@ -10,11 +10,11 @@ import (
 
 type EducationRepositoryInterface interface {
 	Connection() *gorm.DB
-	Create(education models.Education) models.Education
+	Create(education models.Education) (models.Education, error)
 	List(userId string) []models.Education
 	Show(educationId string) (models.Education, error)
-	Update(id string, education models.Education) models.Education
-	Delete(id string)
+	Update(id string, education models.Education) (models.Education, error)
+	Delete(id string) error
 }
 
 type EducationRepository struct {

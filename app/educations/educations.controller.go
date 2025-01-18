@@ -30,7 +30,7 @@ func (ctrl *EducationsController) List(c *gin.Context) {
 	user := core.User(c)
 
 	// get list data from service & repository
-	educations, _ := ctrl.service.List(user.ID)
+	educations := ctrl.service.List(user.ID)
 
 	// response educations data as clean transform data
 	ctrl.root.Success(c, EducationsResponse(educations))
