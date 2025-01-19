@@ -120,6 +120,42 @@ definitions:
       message:
         type: string
     type: object
+  core.Response-educations_EducationResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/educations.EducationResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+  core.Response-educations_EducationsResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/educations.EducationsResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+  core.Response-experiences_ExperienceResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/experiences.ExperienceResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
+  core.Response-experiences_ExperiencesResponseType:
+    properties:
+      data:
+        $ref: '#/definitions/experiences.ExperiencesResponseType'
+      errors:
+        type: object
+      message:
+        type: string
+    type: object
   core.Response-projects_ProjectResponseType:
     properties:
       data:
@@ -230,16 +266,16 @@ definitions:
     type: object
   documents.Document:
     properties:
-      Category:
+      category:
         type: string
-      Description:
+      description:
         type: string
-      PublicationDate:
-        type: string
-      Ratings:
-        type: integer
       id:
         type: string
+      publication_date:
+        type: string
+      ratings:
+        type: integer
       status:
         type: string
       title:
@@ -253,7 +289,7 @@ definitions:
         type: string
       description:
         type: string
-      publicationDate:
+      publication_date:
         type: string
       ratings:
         maximum: 5
@@ -268,7 +304,7 @@ definitions:
     required:
     - category
     - description
-    - publicationDate
+    - publication_date
     - status
     - title
     type: object
@@ -283,7 +319,7 @@ definitions:
         type: string
       description:
         type: string
-      publicationDate:
+      publication_date:
         type: string
       ratings:
         maximum: 5
@@ -298,7 +334,7 @@ definitions:
     required:
     - category
     - description
-    - publicationDate
+    - publication_date
     - status
     - title
     type: object
@@ -307,6 +343,156 @@ definitions:
       documents:
         items:
           $ref: '#/definitions/documents.Document'
+        type: array
+    type: object
+  educations.Education:
+    properties:
+      description:
+        type: string
+      ended_at:
+        type: string
+      field:
+        type: string
+      id:
+        type: string
+      started_at:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  educations.EducationCreateDto:
+    properties:
+      description:
+        type: string
+      ended_at:
+        type: string
+      field:
+        maxLength: 250
+        minLength: 2
+        type: string
+      started_at:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - description
+    - ended_at
+    - field
+    - started_at
+    - title
+    type: object
+  educations.EducationResponseType:
+    properties:
+      education:
+        $ref: '#/definitions/educations.Education'
+    type: object
+  educations.EducationUpdateDto:
+    properties:
+      description:
+        type: string
+      ended_at:
+        type: string
+      field:
+        maxLength: 250
+        minLength: 2
+        type: string
+      started_at:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - description
+    - ended_at
+    - field
+    - started_at
+    - title
+    type: object
+  educations.EducationsResponseType:
+    properties:
+      educations:
+        items:
+          $ref: '#/definitions/educations.Education'
+        type: array
+    type: object
+  experiences.Experience:
+    properties:
+      company:
+        type: string
+      ended_at:
+        type: string
+      id:
+        type: string
+      started_at:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: string
+    type: object
+  experiences.ExperienceCreateDto:
+    properties:
+      company:
+        maxLength: 250
+        minLength: 2
+        type: string
+      ended_at:
+        type: string
+      started_at:
+        type: string
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - company
+    - ended_at
+    - started_at
+    - status
+    - title
+    type: object
+  experiences.ExperienceResponseType:
+    properties:
+      experience:
+        $ref: '#/definitions/experiences.Experience'
+    type: object
+  experiences.ExperienceUpdateDto:
+    properties:
+      company:
+        maxLength: 250
+        minLength: 2
+        type: string
+      ended_at:
+        type: string
+      started_at:
+        type: string
+      status:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - company
+    - ended_at
+    - started_at
+    - status
+    - title
+    type: object
+  experiences.ExperiencesResponseType:
+    properties:
+      experiences:
+        items:
+          $ref: '#/definitions/experiences.Experience'
         type: array
     type: object
   projects.Project:
@@ -383,6 +569,46 @@ definitions:
         items:
           $ref: '#/definitions/projects.Project'
         type: array
+    type: object
+  skills.SkillCreateDto:
+    properties:
+      description:
+        type: string
+      image_url:
+        maxLength: 250
+        minLength: 10
+        type: string
+      level:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - description
+    - image_url
+    - level
+    - title
+    type: object
+  skills.SkillUpdateDto:
+    properties:
+      description:
+        type: string
+      image_url:
+        maxLength: 250
+        minLength: 10
+        type: string
+      level:
+        type: string
+      title:
+        maxLength: 250
+        minLength: 2
+        type: string
+    required:
+    - description
+    - image_url
+    - level
+    - title
     type: object
   users.User:
     properties:
@@ -755,6 +981,222 @@ paths:
       summary: get document by id
       tags:
       - Documents
+  /api/v1/educations:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-educations_EducationsResponseType'
+      security:
+      - Bearer: []
+      summary: get list of educations
+      tags:
+      - Educations
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: education inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/educations.EducationCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-educations_EducationResponseType'
+      security:
+      - Bearer: []
+      summary: create new education api
+      tags:
+      - Educations
+  /api/v1/educations/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Education ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: delete education by id
+      tags:
+      - Educations
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Education ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-educations_EducationResponseType'
+      security:
+      - Bearer: []
+      summary: get education by id
+      tags:
+      - Educations
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Education ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: education inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/educations.EducationUpdateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: update education by id
+      tags:
+      - Educations
+  /api/v1/experiences:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-experiences_ExperiencesResponseType'
+      security:
+      - Bearer: []
+      summary: get list of experiences
+      tags:
+      - Experiences
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: experience inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/experiences.ExperienceCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-experiences_ExperienceResponseType'
+      security:
+      - Bearer: []
+      summary: create new experience api
+      tags:
+      - Experiences
+  /api/v1/experiences/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Experience ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: delete experience by id
+      tags:
+      - Experiences
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Experience ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.Response-experiences_ExperienceResponseType'
+      security:
+      - Bearer: []
+      summary: get experience by id
+      tags:
+      - Experiences
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Experience ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: experience inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/experiences.ExperienceUpdateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+      security:
+      - Bearer: []
+      summary: update experience by id
+      tags:
+      - Experiences
   /api/v1/projects:
     get:
       consumes:
@@ -863,6 +1305,114 @@ paths:
       summary: update project by id
       tags:
       - Projects
+  /api/v1/skills:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: skill
+      security:
+      - Bearer: []
+      summary: get list of skills
+      tags:
+      - Skills
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: skill inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/skills.SkillCreateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: skill
+      security:
+      - Bearer: []
+      summary: create new skill api
+      tags:
+      - Skills
+  /api/v1/skills/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Skill ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: skill
+      security:
+      - Bearer: []
+      summary: get skill by id
+      tags:
+      - Skills
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Skill ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: skill
+      security:
+      - Bearer: []
+      summary: get skill by id
+      tags:
+      - Skills
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Skill ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: skill inputs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/skills.SkillUpdateDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: skill
+      security:
+      - Bearer: []
+      summary: update skill by id
+      tags:
+      - Skills
   /api/v1/users:
     get:
       consumes:

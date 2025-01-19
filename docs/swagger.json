@@ -558,6 +558,358 @@
                 }
             }
         },
+        "/api/v1/educations": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Educations"
+                ],
+                "summary": "get list of educations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.Response-educations_EducationsResponseType"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Educations"
+                ],
+                "summary": "create new education api",
+                "parameters": [
+                    {
+                        "description": "education inputs",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/educations.EducationCreateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.Response-educations_EducationResponseType"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/educations/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Educations"
+                ],
+                "summary": "get education by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Education ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.Response-educations_EducationResponseType"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Educations"
+                ],
+                "summary": "update education by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Education ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "education inputs",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/educations.EducationUpdateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.SuccessResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Educations"
+                ],
+                "summary": "delete education by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Education ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.SuccessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/experiences": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "get list of experiences",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.Response-experiences_ExperiencesResponseType"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "create new experience api",
+                "parameters": [
+                    {
+                        "description": "experience inputs",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/experiences.ExperienceCreateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.Response-experiences_ExperienceResponseType"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/experiences/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "get experience by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Experience ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.Response-experiences_ExperienceResponseType"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "update experience by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Experience ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "experience inputs",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/experiences.ExperienceUpdateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.SuccessResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Experiences"
+                ],
+                "summary": "delete experience by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Experience ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/core.SuccessResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/projects": {
             "get": {
                 "security": [
@@ -729,6 +1081,182 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/core.SuccessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/skills": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "get list of skills",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "skill"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "create new skill api",
+                "parameters": [
+                    {
+                        "description": "skill inputs",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/skills.SkillCreateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "skill"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/skills/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "get skill by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Skill ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "skill"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "update skill by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Skill ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "skill inputs",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/skills.SkillUpdateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "skill"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "get skill by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Skill ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "skill"
                         }
                     }
                 }
@@ -975,6 +1503,62 @@
                 }
             }
         },
+        "core.Response-educations_EducationResponseType": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/educations.EducationResponseType"
+                },
+                "errors": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.Response-educations_EducationsResponseType": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/educations.EducationsResponseType"
+                },
+                "errors": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.Response-experiences_ExperienceResponseType": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/experiences.ExperienceResponseType"
+                },
+                "errors": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "core.Response-experiences_ExperiencesResponseType": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/experiences.ExperiencesResponseType"
+                },
+                "errors": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "core.Response-projects_ProjectResponseType": {
             "type": "object",
             "properties": {
@@ -1140,20 +1724,20 @@
         "documents.Document": {
             "type": "object",
             "properties": {
-                "Category": {
+                "category": {
                     "type": "string"
                 },
-                "Description": {
+                "description": {
                     "type": "string"
-                },
-                "PublicationDate": {
-                    "type": "string"
-                },
-                "Ratings": {
-                    "type": "integer"
                 },
                 "id": {
                     "type": "string"
+                },
+                "publication_date": {
+                    "type": "string"
+                },
+                "ratings": {
+                    "type": "integer"
                 },
                 "status": {
                     "type": "string"
@@ -1171,7 +1755,7 @@
             "required": [
                 "category",
                 "description",
-                "publicationDate",
+                "publication_date",
                 "status",
                 "title"
             ],
@@ -1182,7 +1766,7 @@
                 "description": {
                     "type": "string"
                 },
-                "publicationDate": {
+                "publication_date": {
                     "type": "string"
                 },
                 "ratings": {
@@ -1213,7 +1797,7 @@
             "required": [
                 "category",
                 "description",
-                "publicationDate",
+                "publication_date",
                 "status",
                 "title"
             ],
@@ -1224,7 +1808,7 @@
                 "description": {
                     "type": "string"
                 },
-                "publicationDate": {
+                "publication_date": {
                     "type": "string"
                 },
                 "ratings": {
@@ -1249,6 +1833,220 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/documents.Document"
+                    }
+                }
+            }
+        },
+        "educations.Education": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "ended_at": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "educations.EducationCreateDto": {
+            "type": "object",
+            "required": [
+                "description",
+                "ended_at",
+                "field",
+                "started_at",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "ended_at": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                }
+            }
+        },
+        "educations.EducationResponseType": {
+            "type": "object",
+            "properties": {
+                "education": {
+                    "$ref": "#/definitions/educations.Education"
+                }
+            }
+        },
+        "educations.EducationUpdateDto": {
+            "type": "object",
+            "required": [
+                "description",
+                "ended_at",
+                "field",
+                "started_at",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "ended_at": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                }
+            }
+        },
+        "educations.EducationsResponseType": {
+            "type": "object",
+            "properties": {
+                "educations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/educations.Education"
+                    }
+                }
+            }
+        },
+        "experiences.Experience": {
+            "type": "object",
+            "properties": {
+                "company": {
+                    "type": "string"
+                },
+                "ended_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "experiences.ExperienceCreateDto": {
+            "type": "object",
+            "required": [
+                "company",
+                "ended_at",
+                "started_at",
+                "status",
+                "title"
+            ],
+            "properties": {
+                "company": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                },
+                "ended_at": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                }
+            }
+        },
+        "experiences.ExperienceResponseType": {
+            "type": "object",
+            "properties": {
+                "experience": {
+                    "$ref": "#/definitions/experiences.Experience"
+                }
+            }
+        },
+        "experiences.ExperienceUpdateDto": {
+            "type": "object",
+            "required": [
+                "company",
+                "ended_at",
+                "started_at",
+                "status",
+                "title"
+            ],
+            "properties": {
+                "company": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                },
+                "ended_at": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                }
+            }
+        },
+        "experiences.ExperiencesResponseType": {
+            "type": "object",
+            "properties": {
+                "experiences": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/experiences.Experience"
                     }
                 }
             }
@@ -1357,6 +2155,60 @@
                     "items": {
                         "$ref": "#/definitions/projects.Project"
                     }
+                }
+            }
+        },
+        "skills.SkillCreateDto": {
+            "type": "object",
+            "required": [
+                "description",
+                "image_url",
+                "level",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 10
+                },
+                "level": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
+                }
+            }
+        },
+        "skills.SkillUpdateDto": {
+            "type": "object",
+            "required": [
+                "description",
+                "image_url",
+                "level",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "image_url": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 10
+                },
+                "level": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 2
                 }
             }
         },
