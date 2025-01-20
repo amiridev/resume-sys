@@ -7,11 +7,11 @@ import (
 )
 
 func RegisterRoutes(router *gin.RouterGroup) {
-	ctrl := NewProfilesController()
+	ctrl := NewProfileController()
 
 	authGroup := router.Group("/profiles").Use(middlewares.Auth)
 	{
-		authGroup.GET("", ctrl.List)
+		authGroup.GET("", ctrl.Show)
 		authGroup.GET("/:id", ctrl.Show)
 		authGroup.POST("", ctrl.Create)
 

@@ -1,40 +1,44 @@
 package profiles
 
 import (
-	"errors"
 	"resume-sys/core"
+	"resume-sys/database/models"
+	"resume-sys/database/repositories"
 )
 
 type ProfileServiceInterface interface {
-	GetProfile(userID string) (*Profile, error)
-	CreateProfile(dto ProfileCreateDto, userID string) (*Profile, error)
-	UpdateProfile(dto ProfileUpdateDto, userID string) (*Profile, error)
-	GetUserDetails(userID string) (*UserDetails, error)
+	GetProfile(userID string) (models.Profile, core.Error)
+	CreateProfile(dto ProfileCreateDto, userID string) (models.Profile, core.Error)
+	UpdateProfile(dto ProfileUpdateDto, userID string) (models.Profile, core.Error)
 }
 
-type ProfileService struct{}
+type ProfileService struct {
+	repository repositories.ProfileRepositoryInterface
+}
 
 func NewProfileService() ProfileServiceInterface {
-	return &ProfileService{}
+	return &ProfileService{
+		repository: repositories.NewProfileRepository(),
+	}
 }
 
 // GetProfile retrieves a user's profile by user ID.
-func (s *ProfileService) GetProfile(userID string) (*Profile, error) {
-	profile, err := core.GetProfileByUserID(userID)
+func (s *ProfileService) GetProfile(userID string) (models.Profile, core.Error) {
+	profile, err := s.repository.Show(userID)
+
 	if err != nil {
-		return nil, errors.New("profile not found")
+		return profile, core.Error{"reason": "profile not found"}
 	}
+
 	return profile, nil
 }
 
 // CreateProfile creates a new profile for the user.
-func (s *ProfileService) CreateProfile(dto ProfileCreateDto, userID string) (*Profile, error) {
-	profile := &Profile{
+func (s *ProfileService) CreateProfile(dto ProfileCreateDto, userID string) (models.Profile, core.Error) {
+	profile := models.Profile{
 		UserID:      userID,
-		FullName:    dto.FullName,
 		UserName:    dto.UserName,
-		Mobile:      dto.Mobile,
-		AvatarURL:   dto.AvatarURL,
+		AvatarUrl:   dto.AvatarUrl,
 		Gender:      dto.Gender,
 		DateOfBirth: dto.DateOfBirth,
 		City:        dto.City,
@@ -44,38 +48,35 @@ func (s *ProfileService) CreateProfile(dto ProfileCreateDto, userID string) (*Pr
 		Status:      dto.Status,
 	}
 
-	err := core.SaveProfile(profile)
+	profile, err := s.repository.Create(profile)
+
 	if err != nil {
-		return nil, err
+		return profile, core.Error{"reason": "Something wrong!"}
 	}
+
 	return profile, nil
 }
 
 // UpdateProfile updates an existing profile with the provided data.
-func (s *ProfileService) UpdateProfile(dto ProfileUpdateDto, userID string) (*Profile, error) {
-	profile, err := core.GetProfileByUserID(userID)
+func (s *ProfileService) UpdateProfile(dto ProfileUpdateDto, userID string) (models.Profile, core.Error) {
+	profile, err := s.repository.Show(userID)
+
 	if err != nil {
-		return nil, errors.New("profile not found")
+		return profile, core.Error{"reason": "Something wrong!"}
 	}
 
-	if dto.FullName != "" {
-		profile.FullName = dto.FullName
-	}
 	if dto.UserName != "" {
 		profile.UserName = dto.UserName
 	}
-	if dto.Mobile != "" {
-		profile.Mobile = dto.Mobile
-	}
-	if dto.AvatarURL != "" {
-		profile.AvatarURL = dto.AvatarURL
+	if dto.AvatarUrl != "" {
+		profile.AvatarUrl = dto.AvatarUrl
 	}
 	if dto.Gender != "" {
 		profile.Gender = dto.Gender
 	}
-	if dto.DateOfBirth != "" {
-		profile.DateOfBirth = dto.DateOfBirth
-	}
+	// if dto.DateOfBirth != "" {
+	// 	profile.DateOfBirth = dto.DateOfBirth
+	// }
 	if dto.City != "" {
 		profile.City = dto.City
 	}
@@ -92,41 +93,11 @@ func (s *ProfileService) UpdateProfile(dto ProfileUpdateDto, userID string) (*Pr
 		profile.Status = dto.Status
 	}
 
-	err = core.SaveProfile(profile)
+	_, err = s.repository.Update(profile.ID, profile)
+
 	if err != nil {
-		return nil, err
+		return profile, core.Error{"reason": "Something wrong!"}
 	}
+
 	return profile, nil
-}
-
-// GetUserDetails retrieves all details of a user including profile, courses, projects, etc.
-func (s *ProfileService) GetUserDetails(userID string) (*UserDetails, error) {
-	profile, err := core.GetProfileByUserID(userID)
-	if err != nil {
-		return nil, errors.New("profile not found")
-	}
-
-	courses, err := core.GetCoursesByUserID(userID)
-	if err != nil {
-		return nil, err
-	}
-
-	projects, err := core.GetProjectsByUserID(userID)
-	if err != nil {
-		return nil, err
-	}
-
-	experiences, err := core.GetExperiencesByUserID(userID)
-	if err != nil {
-		return nil, err
-	}
-
-	userDetails := &UserDetails{
-		Profile:     profile,
-		Courses:     courses,
-		Projects:    projects,
-		Experiences: experiences,
-	}
-
-	return userDetails, nil
 }
